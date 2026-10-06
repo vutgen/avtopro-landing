@@ -347,6 +347,28 @@ html.js .reveal.is-visible { opacity: 1; transform: none; }
 .lightbox__close { position: absolute; top: 22px; right: 26px; display: grid; place-items: center; width: 46px; height: 46px; border: 1px solid var(--line-strong); border-radius: 50%; background: rgba(10, 11, 15, .7); font-size: 24px; line-height: 1; transition: color .3s, border-color .3s; }
 .lightbox__close:hover { border-color: var(--accent); color: var(--accent); }
 .lightbox__caption { position: absolute; right: 0; bottom: 26px; left: 0; text-align: center; font-size: 15px; font-weight: 600; color: var(--muted); }
+/* ---------- СЕТЬ ЦЕНТРОВ: выбор марки + карточки ---------- */
+.brand-filter { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; max-width: 980px; margin: 0 auto 40px; }
+.brand-chip { padding: 9px 16px; border: 1px solid var(--line-strong); border-radius: 999px; background: rgba(255, 255, 255, .03); color: var(--muted); font-size: 14.5px; font-weight: 700; transition: color .25s, border-color .25s, background .25s, transform .25s var(--ease); }
+.brand-chip:hover { color: var(--text); border-color: var(--accent); transform: translateY(-2px); }
+.brand-chip[aria-pressed="true"] { border-color: transparent; background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: #140a00; }
+.centers { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; }
+.center { position: relative; display: flex; flex-direction: column; padding: 28px 26px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: linear-gradient(180deg, var(--card), var(--card-2)); transition: transform .4s var(--ease), border-color .4s, box-shadow .4s, opacity .4s; }
+.center:hover { transform: translateY(-6px); border-color: color-mix(in srgb, var(--accent) 45%, transparent); }
+.center.is-match { transform: translateY(-6px); border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent), 0 30px 70px -30px color-mix(in srgb, var(--accent) 70%, transparent); }
+html .center.is-dim, html.js .center.reveal.is-dim { opacity: .38; }
+.center__name { margin-bottom: 14px; font-size: 19px; }
+.center__brands { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 18px; }
+.center__brands li { padding: 4px 10px; border-radius: 8px; background: var(--accent-soft); color: var(--accent); font-size: 13px; font-weight: 700; }
+.center__row { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px; font-size: 15.5px; color: var(--muted); }
+.center__row svg { flex: none; width: 18px; height: 18px; margin-top: 4px; color: var(--accent); }
+.center__row a { font-weight: 700; color: var(--text); transition: color .25s; }
+.center__row a:hover { color: var(--accent); }
+.center__actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: auto; padding-top: 18px; }
+
+/* ---------- ПОМЕТКА «ДЕМО» ---------- */
+.demo-note { display: table; margin-bottom: 16px; padding: 6px 12px; border: 1px dashed var(--line-strong); border-radius: 8px; color: var(--muted); font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+
 /* ============================================================
    АДАПТИВ
    ============================================================ */
@@ -383,6 +405,7 @@ html.js .reveal.is-visible { opacity: 1; transform: none; }
   .stat:nth-last-child(-n+2) { border-bottom: 0; }
   .cards--3 { grid-template-columns: repeat(2, 1fr); }
   .gallery { grid-template-columns: repeat(2, 1fr); }
+  .centers { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .cta__grid { grid-template-columns: minmax(0, 1fr); gap: 44px; }
   .section { padding: 76px 0; }
 }
@@ -403,6 +426,10 @@ html.js .reveal.is-visible { opacity: 1; transform: none; }
   .section__head { margin-bottom: 38px; }
   .section__sub { font-size: 16.5px; }
   .cards--3, .cards--4, .gallery, .steps { grid-template-columns: 1fr; }
+  .centers { grid-template-columns: minmax(0, 1fr); }
+  .brand-filter { justify-content: flex-start; gap: 8px; }
+  .brand-chip { padding: 8px 13px; font-size: 14px; }
+  .demo-note { font-size: 11px; }
   .form { padding: 26px 20px; }
   .form__row { grid-template-columns: 1fr; gap: 0; }
   .price-card { padding: 26px 20px; }

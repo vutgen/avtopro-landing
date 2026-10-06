@@ -51,6 +51,7 @@ if (!empty($data['website'])) respond(['ok' => true]);
 
 $name = clean_line(isset($data['name']) ? $data['name'] : '', 100);
 $phone = clean_line(isset($data['phone']) ? $data['phone'] : '', 30);
+$center = clean_line(isset($data['center']) ? $data['center'] : '', 200);
 $service = clean_line(isset($data['service']) ? $data['service'] : '', 150);
 $comment = clean_text(isset($data['comment']) ? $data['comment'] : '', 1000);
 
@@ -60,6 +61,7 @@ if (mb_strlen($name) < 2 || strlen(preg_replace('/\D/', '', $phone)) !== 11) {
 
 $site = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : '';
 $lines = ['🚗 Новая заявка с сайта ' . $site, '', 'Имя: ' . $name, 'Телефон: ' . $phone];
+if ($center !== '') $lines[] = 'Центр: ' . $center;
 if ($service !== '') $lines[] = 'Услуга: ' . $service;
 if ($comment !== '') $lines[] = "\nКомментарий:\n" . $comment;
 

@@ -230,6 +230,102 @@
       }).join('') +
       '<option value="\u0414\u0440\u0443\u0433\u043E\u0435">\u0414\u0440\u0443\u0433\u043E\u0435 / \u043D\u0435 \u0437\u043D\u0430\u044E</option>';
   }
+  /* ---------- СЕТЬ ЦЕНТРОВ (cfg.centers) ---------- */
+  function centersList() {
+    return (cfg.centers && cfg.centers.items) || [];
+  }
+
+  function mapUrl(address) {
+    var city = (cfg.centers && cfg.centers.city) ? cfg.centers.city + ', ' : '';
+    return 'https://yandex.ru/maps/?text=' + encodeURIComponent(city + address);
+  }
+
+  function renderCenters(el) {
+    el.innerHTML = centersList().map(function (c, i) {
+      return '<article class="center reveal" data-center="' + i + '">' +
+        '<h3 class="center__name">' + esc(c.name) + '</h3>' +
+        '<ul class="center__brands">' + (c.brands || []).map(function (b) {
+          return '<li>' + esc(b) + '</li>';
+        }).join('') + '</ul>' +
+        '<p class="center__row">' + icon('pin') + '<span>' + esc(c.address) + '</span></p>' +
+        (c.phone ? '<p class="center__row">' + icon('phone') + '<a href="tel:' + esc(c.phoneHref || '') + '">' + esc(c.phone) + '</a></p>' : '') +
+        '<div class="center__actions">' +
+        (c.phoneHref ? '<a class="btn btn--primary btn--sm" href="tel:' + esc(c.phoneHref) + '">\u041F\u043E\u0437\u0432\u043E\u043D\u0438\u0442\u044C</a>' : '') +
+        '<a class="btn btn--ghost btn--sm" href="' + esc(mapUrl(c.address)) + '" target="_blank" rel="noopener">\u041C\u0430\u0440\u0448\u0440\u0443\u0442</a>' +
+        '</div>' +
+        '</article>';
+    }).join('');
+  }
+
+  function renderBrandFilter(el) {
+    var brands = [];
+    centersList().forEach(function (c, i) {
+      (c.brands || []).forEach(function (b) { brands.push({ name: b, center: i }); });
+    });
+    brands.sort(function (a, b) { return a.name.localeCompare(b.name); });
+    el.innerHTML = brands.map(function (b) {
+      return '<button type="button" class="brand-chip" data-center="' + b.center + '" aria-pressed="false">' + esc(b.name) + '</button>';
+    }).join('');
+  }
+
+  function renderCenterOptions(el) {
+    var list = centersList();
+    if (!list.length) return;
+    el.innerHTML = '<option value="">\u2014 \u041F\u043E\u0434\u0431\u0435\u0440\u0438\u0442\u0435 \u0437\u0430 \u043C\u0435\u043D\u044F \u2014</option>' +
+      list.map(function (c) {
+        var label = c.name + ' (' + (c.brands || []).join(', ') + ')';
+        return '<option value="' + esc(label) + '">' + esc(label) + '</option>';
+      }).join('');
+  }
+
+  // выбор марки: подсвечиваем нужный центр и подставляем его в форму
+  function initBrandFilter() {
+    var filter = $('.brand-filter');
+    if (!filter) return;
+    var cards = $$('.center');
+    var select = $('select[name="center"]');
+    filter.addEventListener('click', function (e) {
+      var chip = e.target.closest ? e.target.closest('.brand-chip') : null;
+      if (!chip) return;
+      var wasActive = chip.getAttribute('aria-pressed') === 'true';
+      $$('.brand-chip').forEach(function (c) { c.setAttribute('aria-pressed', 'false'); });
+      cards.forEach(function (c) { c.classList.remove('is-match', 'is-dim'); });
+      if (wasActive) return;
+      chip.setAttribute('aria-pressed', 'true');
+      var idx = chip.getAttribute('data-center');
+      cards.forEach(function (c) {
+        c.classList.add(c.getAttribute('data-center') === idx ? 'is-match' : 'is-dim');
+      });
+      if (select && select.options[+idx + 1]) select.selectedIndex = +idx + 1;
+      var match = $('.center[data-center="' + idx + '"]');
+      if (match && window.innerWidth < 960) match.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+  }
+
+  // необязательные блоки: если в конфиге пусто — прячем секцию/поле целиком
+  function hideEmptyOptional() {
+    $$('[data-optional]').forEach(function (box) {
+      var slot = box.querySelector('[data-render="' + box.getAttribute('data-optional') + '"]');
+      if (slot && !slot.children.length) box.hidden = true;
+    });
+    // ссылки меню на скрытые секции тоже убираем
+    $$('.nav__link').forEach(function (a) {
+      var target = $(a.getAttribute('href'));
+      if (target && target.hidden) a.hidden = true;
+    });
+  }
+
+  function renderDemoNotice() {
+    if (!cfg.demoNotice) return;
+    // показываем на первом экране, над бейджем — ничего не перекрывает
+    var place = $('.hero__content');
+    if (!place) return;
+    var note = document.createElement('p');
+    note.className = 'demo-note';
+    note.textContent = cfg.demoNotice;
+    place.insertBefore(note, place.firstChild);
+  }
+
   /* ---------- UI: HEADER / BURGER / FAB ---------- */
   function initHeader() {
     var header = $('#header');
@@ -545,12 +641,21 @@
       socialsFooter: renderSocials,
       footerServices: renderFooterServices,
       footerContacts: renderFooterContacts,
-      serviceOptions: renderServiceOptions
+      serviceOptions: renderServiceOptions,
+      centers: renderCenters,
+      brandFilter: renderBrandFilter,
+      centerOptions: renderCenterOptions
     };
     $$('[data-render]').forEach(function (el) {
       var fn = map[el.getAttribute('data-render')];
       if (fn) fn(el);
     });
+    if (cfg.hero && cfg.hero.showStars === false) {
+      var stars = $('.hero__card-stars');
+      if (stars) stars.hidden = true;
+    }
+    hideEmptyOptional();
+    renderDemoNotice();
   }
 
   function init() {
@@ -565,6 +670,7 @@
     initCardGlow();
     initAccordion();
     initLightbox();
+    initBrandFilter();
     initForm();
   }
 

@@ -48,6 +48,7 @@ export default async (req) => {
 
   const name = line(data.name, 100);
   const phone = line(data.phone, 30);
+  const center = line(data.center, 200);
   const service = line(data.service, 150);
   const comment = text(data.comment, 1000);
 
@@ -57,6 +58,7 @@ export default async (req) => {
 
   const site = new URL(req.url).host;
   const lines = ['🚗 Новая заявка с сайта ' + site, '', 'Имя: ' + name, 'Телефон: ' + phone];
+  if (center) lines.push('Центр: ' + center);
   if (service) lines.push('Услуга: ' + service);
   if (comment) lines.push('\nКомментарий:\n' + comment);
   const msg = lines.join('\n');
