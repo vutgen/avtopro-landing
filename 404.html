@@ -5,15 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Страница не найдена</title>
   <meta name="robots" content="noindex">
-  <meta name="theme-color" content="#0a0b0f">
+  <meta name="theme-color" content="#07090e">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Unbounded:wght@600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/style.css">
   <style>
     .nf { min-height: 100vh; display: grid; place-items: center; padding: 40px 20px; text-align: center; position: relative; overflow: hidden; }
-    .nf__code { font-family: 'Unbounded', sans-serif; font-size: clamp(80px, 18vw, 160px); font-weight: 800; line-height: 1; color: var(--accent); text-shadow: 0 0 60px color-mix(in srgb, var(--accent) 50%, transparent); }
+    .nf__code { font-family: var(--font-head); font-size: clamp(80px, 18vw, 160px); font-weight: 800; line-height: 1; color: var(--accent); text-shadow: 0 0 60px color-mix(in srgb, var(--accent) 50%, transparent); }
     .nf__title { margin: 18px 0 12px; font-size: clamp(22px, 3vw, 30px); }
+    .nf__stripe { width: 72px; margin: 0 auto 26px; }
     .nf p { max-width: 440px; margin: 0 auto 30px; color: var(--muted); }
   </style>
 </head>
@@ -21,6 +22,7 @@
   <main class="nf">
     <div class="hero__glow" aria-hidden="true"></div>
     <div style="position: relative;">
+      <span class="m-stripe nf__stripe" aria-hidden="true"></span>
       <div class="nf__code">404</div>
       <h1 class="nf__title">Такой страницы нет</h1>
       <p>Возможно, ссылка устарела или в адресе опечатка. Вернитесь на главную — там всё самое важное.</p>
