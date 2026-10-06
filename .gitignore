@@ -1,0 +1,10 @@
+# macOS
+.DS_Store
+
+# Локальные настройки редактора / Claude
+.claude/
+.vscode/
+.idea/
+
+# Логи и временные файлы
+*.log
