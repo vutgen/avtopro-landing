@@ -1,0 +1,7 @@
+# Запрещаем прямой доступ к файлу с токеном
+<Files "lead-config.php">
+  Require all denied
+</Files>
+<Files "lead-config.example.php">
+  Require all denied
+</Files>

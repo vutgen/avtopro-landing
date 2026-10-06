@@ -506,7 +506,10 @@
       };
 
       var endpoint = cfg.formEndpoint;
-      if (endpoint) {
+      if (data.website) {
+        // заполнена ловушка — это бот: делаем вид, что всё отправлено
+        setTimeout(done, 900);
+      } else if (endpoint) {
         fetch(endpoint, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },

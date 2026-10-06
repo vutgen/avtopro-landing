@@ -311,6 +311,7 @@ html.js .reveal.is-visible { opacity: 1; transform: none; }
 .form.agree-error .check__box { border-color: var(--danger); box-shadow: 0 0 0 3px color-mix(in srgb, var(--danger) 18%, transparent); }
 .form__fail { margin-top: 16px; padding: 12px 16px; border: 1px solid color-mix(in srgb, var(--danger) 45%, transparent); border-radius: 12px; background: color-mix(in srgb, var(--danger) 10%, transparent); font-size: 14.5px; text-align: center; }
 .form__fail a { font-weight: 800; white-space: nowrap; color: var(--text); }
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 .form__note { margin-top: 16px; text-align: center; font-size: 14.5px; color: var(--muted); }
 .form__note a { font-weight: 700; color: var(--accent); }
 .form__success { position: absolute; inset: 0; z-index: 3; display: none; flex-direction: column; align-items: center; justify-content: center; gap: 10px; padding: 30px; border-radius: inherit; background: rgba(12, 13, 18, .95); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); text-align: center; }

@@ -1,0 +1,18 @@
+# Настройки Netlify. Сборки нет — публикуется папка как есть.
+[build]
+  publish = "."
+  functions = "netlify/functions"
+
+# PHP-обработчик нужен только на обычном хостинге — на Netlify его не отдаём
+[[redirects]]
+  from = "/api/*.php"
+  to = "/404.html"
+  status = 404
+  force = true
+
+# Служебные файлы не отдаём
+[[redirects]]
+  from = "/netlify/*"
+  to = "/404.html"
+  status = 404
+  force = true

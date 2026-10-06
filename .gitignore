@@ -8,3 +8,9 @@
 
 # Логи и временные файлы
 *.log
+
+# Секреты для PHP-обработчика заявок
+api/lead-config.php
+
+# Локальные файлы Netlify CLI
+.netlify/

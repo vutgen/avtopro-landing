@@ -11,15 +11,17 @@
  *    сообщение об успехе, данные никуда не отправляются)
  *  - formEndpoint: "https://formspree.io/f/xxxxxxx"
  *    -> реальная отправка заявок на почту (Formspree / Web3Forms)
- *  - formEndpoint: "/api/lead" -> твоя серверная функция
- *    (например, отправка в Telegram-бота)
+ *  - formEndpoint: "/api/lead" -> заявки в Telegram на Netlify
+ *    (netlify/functions/lead.mjs, см. NEW_CLIENT.md)
+ *  - formEndpoint: "/api/lead.php" -> заявки в Telegram на обычном
+ *    PHP-хостинге (api/lead.php, см. NEW_CLIENT.md)
  * ============================================================
  */
 
 window.LANDING_CONFIG = {
 
   /* -------- РЕАЛЬНАЯ ОТПРАВКА ФОРМЫ -------- */
-  formEndpoint: null, // например: "https://formspree.io/f/xxxxxxx"
+  formEndpoint: null, // "/api/lead" (Netlify) или "/api/lead.php" (PHP-хостинг)
 
   /* -------- БРЕНД -------- */
   brand: {

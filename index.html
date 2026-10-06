@@ -213,6 +213,10 @@
                 <span class="field__label">Комментарий <em>(необязательно)</em></span>
                 <textarea name="comment" rows="3" placeholder="Марка авто, год, что беспокоит"></textarea>
               </label>
+              <!-- ловушка для спам-ботов: людям не видна, боты её заполняют -->
+              <div class="hp" aria-hidden="true">
+                <label>Сайт <input type="text" name="website" tabindex="-1" autocomplete="off"></label>
+              </div>
               <label class="check">
                 <input type="checkbox" name="agree" required checked>
                 <span class="check__box" aria-hidden="true"></span>
